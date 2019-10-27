@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CountdownTimerDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7O-j6-rK6">
+                                <rect key="frame" x="70" y="185" width="54" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="21d-X5-gt0">
+                                <rect key="frame" x="70" y="256" width="84" height="30"/>
+                                <state key="normal" title="Start Timer1"/>
+                                <connections>
+                                    <action selector="didClickStartTimer1Button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yV6-E8-LGr"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1NA-rD-ewu">
+                                <rect key="frame" x="141" y="195.5" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer1:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3n-cW-KX9">
+                                <rect key="frame" x="70" y="124" width="56" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYN-f0-R8D">
+                                <rect key="frame" x="141" y="134.5" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjv-lS-Ft0">
+                                <rect key="frame" x="70" y="316" width="86" height="30"/>
+                                <state key="normal" title="Start Timer2"/>
+                                <connections>
+                                    <action selector="didClickStartTimer2Button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MmR-ym-Q3H"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1NA-rD-ewu" firstAttribute="leading" secondItem="MYN-f0-R8D" secondAttribute="leading" id="1XI-m6-qCa"/>
+                            <constraint firstItem="21d-X5-gt0" firstAttribute="leading" secondItem="a7O-j6-rK6" secondAttribute="leading" id="8pL-7w-8EY"/>
+                            <constraint firstItem="MYN-f0-R8D" firstAttribute="centerY" secondItem="n3n-cW-KX9" secondAttribute="centerY" id="F6a-MR-2eL"/>
+                            <constraint firstItem="MYN-f0-R8D" firstAttribute="leading" secondItem="n3n-cW-KX9" secondAttribute="trailing" constant="15" id="VI1-kQ-CFd"/>
+                            <constraint firstItem="n3n-cW-KX9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="Wxf-pg-v9m"/>
+                            <constraint firstItem="zjv-lS-Ft0" firstAttribute="leading" secondItem="21d-X5-gt0" secondAttribute="leading" id="bSa-7z-a1b"/>
+                            <constraint firstItem="n3n-cW-KX9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="70" id="bd0-oM-bpj"/>
+                            <constraint firstItem="1NA-rD-ewu" firstAttribute="centerY" secondItem="a7O-j6-rK6" secondAttribute="centerY" id="cnz-GM-Gam"/>
+                            <constraint firstItem="a7O-j6-rK6" firstAttribute="top" secondItem="n3n-cW-KX9" secondAttribute="bottom" constant="40" id="cqc-Th-LgJ"/>
+                            <constraint firstItem="21d-X5-gt0" firstAttribute="top" secondItem="a7O-j6-rK6" secondAttribute="bottom" constant="50" id="mKZ-Lf-tGD"/>
+                            <constraint firstItem="a7O-j6-rK6" firstAttribute="leading" secondItem="n3n-cW-KX9" secondAttribute="leading" id="u0R-xD-M9P"/>
+                            <constraint firstItem="zjv-lS-Ft0" firstAttribute="top" secondItem="21d-X5-gt0" secondAttribute="bottom" constant="30" id="z8l-WF-7dn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="countdownLabel1" destination="MYN-f0-R8D" id="P85-zP-5k1"/>
+                        <outlet property="countdownLabel2" destination="1NA-rD-ewu" id="Ubw-Fl-7MK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="110"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
