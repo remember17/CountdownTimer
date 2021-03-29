@@ -1,6 +1,5 @@
 //
 //  CountdownTimer.swift
-//  https://www.jianshu.com/p/58b431ad14d4
 //
 //  Created by 吴浩 on 2019/10/27.
 //  Copyright © 2019 wuhao. All rights reserved.

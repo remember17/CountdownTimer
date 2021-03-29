@@ -1,6 +1,5 @@
 //
 //  CountdownTimer.h
-//  https://www.jianshu.com/p/58b431ad14d4
 //
 //  Created by wu, hao on 2019/10/28.
 //  Copyright © 2019 wuhao. All rights reserved.

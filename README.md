@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
 ```
 
 4. 开启一个定时器，
-> 当Block中要使用self的时候，注意循环引用
+> ⚠️当Block中要使用self的时候，注意循环引用
 ```objc
 [CountdownTimer startTimerWithKey:test1 count:60 callBack:^(NSInteger count, BOOL isFinished) {
     NSLog(@"倒计时：%ld", count);
@@ -72,7 +72,7 @@ enum CountDownKey: CaseIterable {
 ```
 
 3. 开启一个定时器，
-> 当闭包中要使用self的时候，记得加[weak self]
+> ⚠️当闭包中要使用self的时候，记得加[weak self]
 ```swift
 CountdownTimer.startTimer(key: .test1, count: 60) { (count, finish) in
   print(count) // 倒计时数字

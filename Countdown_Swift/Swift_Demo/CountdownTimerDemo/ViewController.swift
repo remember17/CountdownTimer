@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var countdownLabel1: UILabel!
     @IBOutlet private weak var countdownLabel2: UILabel!
  
+    // ⚠️ 注意使用weak self
     @IBAction private func didClickStartTimer1Button(_ sender: Any) {
         CountdownTimer.startTimer(key: .test1, count: 60) { [weak self] (count, finish) in
             self?.countdownLabel1.text = finish ? "Finished" : "\(count)"
