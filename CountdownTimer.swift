@@ -1,10 +1,3 @@
-//
-//  CountdownTimer.swift
-//
-//  Created by wuhao on 2019/10/27.
-//  Copyright © 2019 wuhao. All rights reserved.
-//  https://github.com/remember17/CountdownTimer
-
 import UIKit
 
 public protocol Countdownable {
@@ -17,7 +10,6 @@ public class CountdownTimer {
         var endTimeInterval: TimeInterval
         var timer: DispatchSourceTimer?
         var callBack: CountdownCallback?
-        var currentCount = 0
     }
     public typealias CountdownCallback = (_ count: Int, _ finished: Bool) -> Void
     private var countdowns = [String: Countdown]()
@@ -25,6 +17,7 @@ public class CountdownTimer {
     private var subscribedScenarioKeys = [String: String]()
     static private let shared = CountdownTimer()
     private let lock = NSLock()
+    private let timerQueue = DispatchQueue(label: "com.remember17.countdowntimer", qos: .utility)
 
     public static func start(key: Countdownable,
                              count: Int,
@@ -55,33 +48,27 @@ public class CountdownTimer {
 
 extension CountdownTimer {
     private func createTimer(key: Countdownable, endTimeInterval: TimeInterval) -> DispatchSourceTimer? {
-        let timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.global())
-        timer.schedule(wallDeadline: .now(), repeating: 1)
-        timer.setEventHandler(handler: {
+        let timer = DispatchSource.makeTimerSource(flags: [], queue: timerQueue)
+        timer.schedule(wallDeadline: .now(), repeating: 1, leeway: .milliseconds(100))
+        timer.setEventHandler(handler: { [weak self] in
             let currentTimeInterval = Date().timeIntervalSince1970
-            var countdown = Int(round(endTimeInterval - currentTimeInterval))
-            countdown -= 1
-            let result = max(countdown, 0)
+            let remaining = endTimeInterval - currentTimeInterval
+            let result = max(Int(ceil(remaining)), 0)
             DispatchQueue.main.async {
-                self.handleCallback(key, result, result == 0)
+                self?.handleCallback(key, result, result == 0)
             }
         })
         return timer
     }
 
     private func handleCallback(_ key: Countdownable, _ count: Int, _ finished: Bool) {
-        guard var countdown = getCountdown(key: key),
-              let callback = countdown.callBack else {
-                  remove(key: key)
-                  return
-              }
-        countdown.currentCount = count
+        guard let (callback, scenarioCallbacksSnapshot) = getCallbacksSnapshot(for: key) else {
+            remove(key: key)
+            return
+        }
         callback(count, finished)
-        for (scenario, countdownKey) in subscribedScenarioKeys {
-            if countdownKey == key.countdownKey,
-               let scenarioCallback = getSubscribedInfo(scenario: scenario).scenarioCallback {
-                scenarioCallback(count, finished)
-            }
+        for scenarioCallback in scenarioCallbacksSnapshot {
+            scenarioCallback(count, finished)
         }
         guard finished else { return }
         remove(key: key)
@@ -92,15 +79,11 @@ extension CountdownTimer {
     private func addCountdown(key: Countdownable,
                               countdown: Countdown) {
         lock.lock()
+        if let existing = countdowns[key.countdownKey] {
+            existing.timer?.cancel()
+        }
         countdowns[key.countdownKey] = countdown
         lock.unlock()
-    }
-
-    private func getCountdown(key: Countdownable) -> Countdown? {
-        lock.lock()
-        let countdown = countdowns[key.countdownKey]
-        lock.unlock()
-        return countdown
     }
 
     private func addScenarioCallback(key: Countdownable,
@@ -119,21 +102,26 @@ extension CountdownTimer {
         lock.unlock()
     }
 
-    private func getSubscribedInfo(scenario: String) -> (countdownKey: String?,
-                                                         scenarioCallback: CountdownCallback?) {
+    private func getCallbacksSnapshot(for key: Countdownable) -> (CountdownCallback, [CountdownCallback])? {
         lock.lock()
-        let countdownKey = subscribedScenarioKeys[scenario]
-        let callback = scenarioCallbacks[scenario]
+        guard let countdown = countdowns[key.countdownKey],
+              let callback = countdown.callBack else {
+            lock.unlock()
+            return nil
+        }
+        let scenarioCallbacksSnapshot = subscribedScenarioKeys.compactMap { scenario, countdownKey -> CountdownCallback? in
+            guard countdownKey == key.countdownKey else { return nil }
+            return scenarioCallbacks[scenario]
+        }
         lock.unlock()
-        return (countdownKey, callback)
+        return (callback, scenarioCallbacksSnapshot)
     }
     
     private func remove(key: Countdownable) {
         lock.lock()
-        countdowns[key.countdownKey]?.timer?.cancel()
-        countdowns[key.countdownKey]?.timer = nil
-        countdowns[key.countdownKey]?.callBack = nil
-        countdowns.removeValue(forKey: key.countdownKey)
+        if let countdown = countdowns.removeValue(forKey: key.countdownKey) {
+            countdown.timer?.cancel()
+        }
         lock.unlock()
     }
 
